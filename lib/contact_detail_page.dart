@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqlflite_crud/sql_helper.dart';
 import 'edit_contact_page.dart'; // Import your EditContactPage
 
 class ContactDetailPage extends StatelessWidget {
@@ -40,26 +41,42 @@ class ContactDetailPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EditContactPage(
-                id: contact['id'].toString(),
-                name: contact['name'],
-                surname: contact['surname'],
-                job: contact['job'],
-                phone: contact['phone'],
-                email: contact['email'],
-                website: contact['website'],
-                isFavorite: contact['isFavorite'] == 1,
-              ),
+      floatingActionButton: Column(
+  mainAxisAlignment: MainAxisAlignment.end,
+  children: [
+    FloatingActionButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EditContactPage(
+              id: contact['id'].toString(),
+              name: contact['name'],
+              surname: contact['surname'],
+              job: contact['job'],
+              phone: contact['phone'],
+              email: contact['email'],
+              website: contact['website'],
+              isFavorite: contact['isFavorite'] == 1,
             ),
-          );
-        },
-        child: const Icon(Icons.edit),
-      ),
+          ),
+        );
+      },
+      child: const Icon(Icons.edit),
+    ),
+    SizedBox(height: 10), 
+    FloatingActionButton(
+      onPressed: () async {
+        await SQLHelper.delete('contacts', contact['id']);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Contact deleted")),
+        );
+        Navigator.pop(context); 
+      },
+      child: const Icon(Icons.delete),
+    ),
+  ],
+),
     );
   }
 }

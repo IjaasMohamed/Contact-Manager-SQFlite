@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'sql_helper.dart'; 
-import 'add_contact_page.dart'; 
-import 'contact_detail_page.dart'; 
+import 'sql_helper.dart'; // Import your SQL Helper
+import 'add_contact_page.dart'; // Import your AddContactPage
+import 'contact_detail_page.dart'; // Import your ContactDetailPage
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void search() async { 
+  void search() async { // Add this function
     final data = await SQLHelper.searchData('contacts', searchController.text.trim());
     setState(() {
       _contacts = data;
