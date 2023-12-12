@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'sql_helper.dart'; // Import your SQL Helper
-import 'home_page.dart';
+import 'home_page.dart'; // Import your HomePage
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await initDatabase(); // Initializing the SQLite database
+void main() {
   runApp(const MyApp());
-}
-
-Future<void> initDatabase() async {
-  await SQLHelper.database(); // Initialize your SQLite database
 }
 
 class MyApp extends StatelessWidget {
@@ -18,10 +11,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Contact Manager',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: const HomePage(),
     );
   }

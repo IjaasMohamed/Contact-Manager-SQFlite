@@ -8,10 +8,18 @@ class SQLHelper {
       path.join(dbPath, 'contacts.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE contacts(id INTEGER PRIMARY KEY, name TEXT, phone TEXT, email TEXT)',
+          'CREATE TABLE contacts(id INTEGER PRIMARY KEY, name TEXT, surname TEXT, job TEXT, phone TEXT, email TEXT, website TEXT)',
         );
       },
-      version: 1,
+      onUpgrade: (db, oldVersion, newVersion) {
+        if (oldVersion < 2) {
+          return db.execute(
+            'ALTER TABLE contacts ADD COLUMN surname TEXT',
+          );
+        }
+        // Handle other updates in the future
+      },
+      version: 2, // Increment this number whenever you change the table structure
     );
   }
 
@@ -27,6 +35,15 @@ class SQLHelper {
   static Future<List<Map<String, dynamic>>> getData(String table) async {
     final db = await SQLHelper.database();
     return db.query(table);
+  }
+
+  static Future<List<Map<String, dynamic>>> searchData(String table, String query) async {
+    final db = await SQLHelper.database();
+    return db.query(
+      table,
+      where: 'name LIKE ?',
+      whereArgs: ['%$query%'],
+    );
   }
 
   static Future<void> update(String table, Map<String, dynamic> data) async {

@@ -4,14 +4,20 @@ import 'sql_helper.dart'; // Import your SQL Helper
 class EditContactPage extends StatefulWidget {
   final String id;
   final String name;
+  final String surname;
+  final String job;
   final String phone;
   final String email;
+  final String website;
 
   const EditContactPage({
     required this.id,
     required this.name,
+    required this.surname,
+    required this.job,
     required this.phone,
     required this.email,
+    required this.website,
     Key? key,
   }) : super(key: key);
 
@@ -22,22 +28,31 @@ class EditContactPage extends StatefulWidget {
 class _EditContactPageState extends State<EditContactPage> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController nameController;
+  late final TextEditingController surnameController;
+  late final TextEditingController jobController;
   late final TextEditingController phoneController;
   late final TextEditingController emailController;
+  late final TextEditingController websiteController;
 
   @override
   void initState() {
     nameController = TextEditingController(text: widget.name);
+    surnameController = TextEditingController(text: widget.surname);
+    jobController = TextEditingController(text: widget.job);
     phoneController = TextEditingController(text: widget.phone);
     emailController = TextEditingController(text: widget.email);
+    websiteController = TextEditingController(text: widget.website);
     super.initState();
   }
 
   @override
   void dispose() {
     nameController.dispose();
+    surnameController.dispose();
+    jobController.dispose();
     phoneController.dispose();
     emailController.dispose();
+    websiteController.dispose();
     super.dispose();
   }
 
@@ -49,8 +64,11 @@ class _EditContactPageState extends State<EditContactPage> {
           {
             'id': int.parse(widget.id),
             'name': nameController.text.trim(),
+            'surname': surnameController.text.trim(),
+            'job': jobController.text.trim(),
             'phone': phoneController.text.trim(),
             'email': emailController.text.trim(),
+            'website': websiteController.text.trim(),
           },
         );
 
@@ -94,7 +112,36 @@ class _EditContactPageState extends State<EditContactPage> {
                   },
                   decoration: const InputDecoration(
                     hintText: "Name",
-                    // Adjust other input decoration properties as needed
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: surnameController,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter a surname";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Surname",
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: jobController,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter a job";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Job",
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -111,7 +158,6 @@ class _EditContactPageState extends State<EditContactPage> {
                   },
                   decoration: const InputDecoration(
                     hintText: "Phone",
-                    // Adjust other input decoration properties as needed
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -128,7 +174,22 @@ class _EditContactPageState extends State<EditContactPage> {
                   },
                   decoration: const InputDecoration(
                     hintText: "Email",
-                    // Adjust other input decoration properties as needed
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  keyboardType: TextInputType.url,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: websiteController,
+                  textInputAction: TextInputAction.done,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter a website";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Website",
                   ),
                 ),
                 const SizedBox(height: 40),

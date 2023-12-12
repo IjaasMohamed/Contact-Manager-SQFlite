@@ -11,16 +11,22 @@ class AddContactPage extends StatefulWidget {
 class _AddContactPageState extends State<AddContactPage> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
+  final surnameController = TextEditingController();
+  final jobController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
+  final websiteController = TextEditingController();
 
   void addContact() async {
     if (_formKey.currentState!.validate()) {
       try {
         final contactData = {
           'name': nameController.text.trim(),
+          'surname': surnameController.text.trim(),
+          'job': jobController.text.trim(),
           'phone': phoneController.text.trim(),
           'email': emailController.text.trim(),
+          'website': websiteController.text.trim(),
         };
 
         await SQLHelper.insert('contacts', contactData);
@@ -43,8 +49,11 @@ class _AddContactPageState extends State<AddContactPage> {
   @override
   void dispose() {
     nameController.dispose();
+    surnameController.dispose();
+    jobController.dispose();
     phoneController.dispose();
     emailController.dispose();
+    websiteController.dispose();
     super.dispose();
   }
 
@@ -55,7 +64,7 @@ class _AddContactPageState extends State<AddContactPage> {
         title: const Text("Add Contact"),
       ),
       body: ListView(
-                padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(14),
         children: [
           Form(
             key: _formKey,
@@ -73,7 +82,36 @@ class _AddContactPageState extends State<AddContactPage> {
                   },
                   decoration: const InputDecoration(
                     hintText: "Name",
-                    // Adjust other input decoration properties as needed
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: surnameController,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter a surname";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Surname",
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: jobController,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter a job";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Job",
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -90,7 +128,6 @@ class _AddContactPageState extends State<AddContactPage> {
                   },
                   decoration: const InputDecoration(
                     hintText: "Phone",
-                    // Adjust other input decoration properties as needed
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -98,7 +135,7 @@ class _AddContactPageState extends State<AddContactPage> {
                   keyboardType: TextInputType.emailAddress,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: emailController,
-                  textInputAction: TextInputAction.done,
+                  textInputAction: TextInputAction.next,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Please enter an email";
@@ -107,7 +144,22 @@ class _AddContactPageState extends State<AddContactPage> {
                   },
                   decoration: const InputDecoration(
                     hintText: "Email",
-                    // Adjust other input decoration properties as needed
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  keyboardType: TextInputType.url,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: websiteController,
+                  textInputAction: TextInputAction.done,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter a website";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Website",
                   ),
                 ),
                 const SizedBox(height: 40),

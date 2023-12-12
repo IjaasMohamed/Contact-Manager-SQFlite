@@ -11,11 +11,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final searchController = TextEditingController(); // Add this line
   List<Map<String, dynamic>> _contacts = [];
   bool _isLoading = true;
 
   void _refreshContacts() async {
     final data = await SQLHelper.getData('contacts'); // Replace 'contacts' with your table name
+    setState(() {
+      _contacts = data;
+      _isLoading = false;
+      searchController.clear(); // Add this line
+    });
+  }
+
+  void search() async { // Add this function
+    final data = await SQLHelper.searchData('contacts', searchController.text.trim());
     setState(() {
       _contacts = data;
       _isLoading = false;
@@ -41,6 +51,20 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Contacts"),
+        actions: [ // Add this block
+          Expanded(
+            child: TextField(
+              controller: searchController,
+              decoration: const InputDecoration(
+                hintText: 'Search',
+              ),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: search,
+          ),
+        ],
       ),
       body: _isLoading
           ? const Center(
@@ -72,8 +96,11 @@ class _HomePageState extends State<HomePage> {
                                     builder: (context) => EditContactPage(
                                       id: contactId.toString(),
                                       name: contact['name'],
+                                      surname: contact['surname'],
+                                      job: contact['job'],
                                       phone: contact['phone'],
                                       email: contact['email'],
+                                      website: contact['website'],
                                     ),
                                   ),
                                 ).then((_) => _refreshContacts());
