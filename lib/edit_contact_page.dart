@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'sql_helper.dart'; // Import your SQL Helper
-
+import 'sql_helper.dart'; 
 class EditContactPage extends StatefulWidget {
   final String id;
   final String name;
@@ -73,7 +72,7 @@ class _EditContactPageState extends State<EditContactPage> {
             'phone': phoneController.text.trim(),
             'email': emailController.text.trim(),
             'website': websiteController.text.trim(),
-            'isFavorite': isFavorite ? 1 : 0, // Add this line
+            'isFavorite': isFavorite ? 1 : 0,
           },
         );
 

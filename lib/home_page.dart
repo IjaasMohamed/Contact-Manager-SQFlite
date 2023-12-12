@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'sql_helper.dart'; // Import your SQL Helper
-import 'edit_contact_page.dart'; // Import your EditContactPage
-import 'add_contact_page.dart'; // Import your AddContactPage
+import 'sql_helper.dart'; 
+import 'add_contact_page.dart'; 
+import 'contact_detail_page.dart'; 
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,20 +11,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final searchController = TextEditingController(); // Add this line
+  final searchController = TextEditingController(); 
   List<Map<String, dynamic>> _contacts = [];
   bool _isLoading = true;
 
   void _refreshContacts() async {
-    final data = await SQLHelper.getData('contacts'); // Replace 'contacts' with your table name
+    final data = await SQLHelper.getData('contacts'); 
     setState(() {
       _contacts = data;
       _isLoading = false;
-      searchController.clear(); // Add this line
+      searchController.clear(); 
     });
   }
 
-  void search() async { // Add this function
+  void search() async { 
     final data = await SQLHelper.searchData('contacts', searchController.text.trim());
     setState(() {
       _contacts = data;
@@ -78,7 +78,6 @@ class _HomePageState extends State<HomePage> {
                   itemCount: _contacts.length,
                   itemBuilder: (context, index) {
                     final contact = _contacts[index];
-                    final contactId = contact['id'];
                     return Card(
                       margin: const EdgeInsets.all(8),
                       child: ListTile(
@@ -89,60 +88,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                         title: Text(contact['name']),
                         subtitle: Text(contact['phone'] + '\n' + contact['email']),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => EditContactPage(
-                                      id: contactId.toString(),
-                                      name: contact['name'],
-                                      surname: contact['surname'],
-                                      job: contact['job'],
-                                      phone: contact['phone'],
-                                      email: contact['email'],
-                                      website: contact['website'],
-                                      isFavorite: contact['isFavorite'] == 1,
-                                    ),
-                                  ),
-                                ).then((_) => _refreshContacts());
-                              },
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ContactDetailPage(contact: contact),
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text('Delete Contact'),
-                                      content: const Text('Are you sure you want to delete this contact?'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text('CANCEL'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            _deleteContact(contactId);
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text('DELETE'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     );
                   },

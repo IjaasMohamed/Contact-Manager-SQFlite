@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'sql_helper.dart'; // Import your SQL Helper
+import 'sql_helper.dart'; 
 
 class AddContactPage extends StatefulWidget {
   const AddContactPage({Key? key}) : super(key: key);
@@ -32,9 +32,8 @@ class _AddContactPageState extends State<AddContactPage> {
 
         await SQLHelper.insert('contacts', contactData);
 
-        Navigator.pop(context); // Return to the previous screen after adding
+        Navigator.pop(context); 
       } catch (e) {
-        // Handle exceptions or errors if any
         print("Failed to add contact: $e");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Failed to add contact")),
