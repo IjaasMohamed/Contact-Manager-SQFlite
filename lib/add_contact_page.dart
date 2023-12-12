@@ -27,6 +27,7 @@ class _AddContactPageState extends State<AddContactPage> {
           'phone': phoneController.text.trim(),
           'email': emailController.text.trim(),
           'website': websiteController.text.trim(),
+          'isFavorite': 0, // Add this line
         };
 
         await SQLHelper.insert('contacts', contactData);
@@ -89,12 +90,6 @@ class _AddContactPageState extends State<AddContactPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: surnameController,
                   textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter a surname";
-                    }
-                    return null;
-                  },
                   decoration: const InputDecoration(
                     hintText: "Surname",
                   ),
@@ -104,12 +99,6 @@ class _AddContactPageState extends State<AddContactPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: jobController,
                   textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter a job";
-                    }
-                    return null;
-                  },
                   decoration: const InputDecoration(
                     hintText: "Job",
                   ),
@@ -136,12 +125,6 @@ class _AddContactPageState extends State<AddContactPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: emailController,
                   textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter an email";
-                    }
-                    return null;
-                  },
                   decoration: const InputDecoration(
                     hintText: "Email",
                   ),
@@ -152,12 +135,6 @@ class _AddContactPageState extends State<AddContactPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: websiteController,
                   textInputAction: TextInputAction.done,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter a website";
-                    }
-                    return null;
-                  },
                   decoration: const InputDecoration(
                     hintText: "Website",
                   ),

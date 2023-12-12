@@ -82,6 +82,11 @@ class _HomePageState extends State<HomePage> {
                     return Card(
                       margin: const EdgeInsets.all(8),
                       child: ListTile(
+                        leading: CircleAvatar(
+                          child: contact['isFavorite'] == 1
+                              ? const Icon(Icons.star, color: Colors.yellow)
+                              : null,
+                        ),
                         title: Text(contact['name']),
                         subtitle: Text(contact['phone'] + '\n' + contact['email']),
                         trailing: Row(
@@ -101,6 +106,7 @@ class _HomePageState extends State<HomePage> {
                                       phone: contact['phone'],
                                       email: contact['email'],
                                       website: contact['website'],
+                                      isFavorite: contact['isFavorite'] == 1,
                                     ),
                                   ),
                                 ).then((_) => _refreshContacts());

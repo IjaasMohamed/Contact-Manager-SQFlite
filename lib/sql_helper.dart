@@ -8,7 +8,7 @@ class SQLHelper {
       path.join(dbPath, 'contacts.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE contacts(id INTEGER PRIMARY KEY, name TEXT, surname TEXT, job TEXT, phone TEXT, email TEXT, website TEXT)',
+          'CREATE TABLE contacts(id INTEGER PRIMARY KEY, name TEXT, surname TEXT, job TEXT, phone TEXT, email TEXT, website TEXT, isFavorite INTEGER)',
         );
       },
       onUpgrade: (db, oldVersion, newVersion) {
@@ -17,9 +17,14 @@ class SQLHelper {
             'ALTER TABLE contacts ADD COLUMN surname TEXT',
           );
         }
+        if (oldVersion < 3) {
+          return db.execute(
+            'ALTER TABLE contacts ADD COLUMN isFavorite INTEGER',
+          );
+        }
         // Handle other updates in the future
       },
-      version: 2, // Increment this number whenever you change the table structure
+      version: 3, // Increment this number whenever you change the table structure
     );
   }
 

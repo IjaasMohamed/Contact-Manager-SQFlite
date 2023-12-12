@@ -9,6 +9,7 @@ class EditContactPage extends StatefulWidget {
   final String phone;
   final String email;
   final String website;
+  final bool isFavorite;
 
   const EditContactPage({
     required this.id,
@@ -18,6 +19,7 @@ class EditContactPage extends StatefulWidget {
     required this.phone,
     required this.email,
     required this.website,
+    required this.isFavorite,
     Key? key,
   }) : super(key: key);
 
@@ -33,6 +35,7 @@ class _EditContactPageState extends State<EditContactPage> {
   late final TextEditingController phoneController;
   late final TextEditingController emailController;
   late final TextEditingController websiteController;
+  late bool isFavorite;
 
   @override
   void initState() {
@@ -42,6 +45,7 @@ class _EditContactPageState extends State<EditContactPage> {
     phoneController = TextEditingController(text: widget.phone);
     emailController = TextEditingController(text: widget.email);
     websiteController = TextEditingController(text: widget.website);
+    isFavorite = widget.isFavorite;
     super.initState();
   }
 
@@ -69,6 +73,7 @@ class _EditContactPageState extends State<EditContactPage> {
             'phone': phoneController.text.trim(),
             'email': emailController.text.trim(),
             'website': websiteController.text.trim(),
+            'isFavorite': isFavorite ? 1 : 0, // Add this line
           },
         );
 
@@ -97,7 +102,7 @@ class _EditContactPageState extends State<EditContactPage> {
         padding: const EdgeInsets.all(14),
         children: [
           Form(
-            key: _formKey,
+                        key: _formKey,
             child: Column(
               children: [
                 TextFormField(
@@ -119,12 +124,6 @@ class _EditContactPageState extends State<EditContactPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: surnameController,
                   textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter a surname";
-                    }
-                    return null;
-                  },
                   decoration: const InputDecoration(
                     hintText: "Surname",
                   ),
@@ -134,12 +133,6 @@ class _EditContactPageState extends State<EditContactPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: jobController,
                   textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter a job";
-                    }
-                    return null;
-                  },
                   decoration: const InputDecoration(
                     hintText: "Job",
                   ),
@@ -166,12 +159,6 @@ class _EditContactPageState extends State<EditContactPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: emailController,
                   textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter an email";
-                    }
-                    return null;
-                  },
                   decoration: const InputDecoration(
                     hintText: "Email",
                   ),
@@ -182,15 +169,19 @@ class _EditContactPageState extends State<EditContactPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: websiteController,
                   textInputAction: TextInputAction.done,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter a website";
-                    }
-                    return null;
-                  },
                   decoration: const InputDecoration(
                     hintText: "Website",
                   ),
+                ),
+                const SizedBox(height: 20),
+                CheckboxListTile(
+                  title: const Text("Favorite"),
+                  value: isFavorite,
+                  onChanged: (newValue) {
+                    setState(() {
+                      isFavorite = newValue!;
+                    });
+                  },
                 ),
                 const SizedBox(height: 40),
                 SizedBox(
