@@ -17,16 +17,72 @@ class ContactDetailPage extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         child: ListView(
           children: [
-            _buildDetailItem('Name', contact['name']),
-            _buildDetailItem('Surname', contact['surname']),
-            _buildDetailItem('Job', contact['job']),
-            _buildDetailItem('Phone', contact['phone']),
-            _buildDetailItem('Email', contact['email']),
-            _buildDetailItem('Website', contact['website']),
-            _buildDetailItem(
-              'Is Favorite',
-              contact['isFavorite'] == 1 ? 'Yes' : 'No',
+            CircleAvatar(
+              radius: 60,
+              backgroundColor: Colors.grey, // Default color for the avatar
+              child: Icon(
+                Icons.person,
+                size: 60,
+                color: Colors.white,
+              ),
             ),
+            const SizedBox(height: 20),
+            TextFormField(
+              initialValue: contact['name'],
+              readOnly: true,
+              decoration: const InputDecoration(
+                labelText: 'Name',
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              initialValue: contact['surname'],
+              readOnly: true,
+              decoration: const InputDecoration(
+                labelText: 'Surname',
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              initialValue: contact['job'],
+              readOnly: true,
+              decoration: const InputDecoration(
+                labelText: 'Job',
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              initialValue: contact['phone'],
+              readOnly: true,
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(
+                labelText: 'Phone',
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              initialValue: contact['email'],
+              readOnly: true,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              initialValue: contact['website'],
+              readOnly: true,
+              keyboardType: TextInputType.url,
+              decoration: const InputDecoration(
+                labelText: 'Website',
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Is Favorite: ${contact['isFavorite'] == 1 ? 'Yes' : 'No'}',
+              style: TextStyle(fontSize: 18),
+            ),
+            const Divider(),
           ],
         ),
       ),
@@ -53,7 +109,7 @@ class ContactDetailPage extends StatelessWidget {
             },
             child: const Icon(Icons.edit),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           FloatingActionButton(
             onPressed: () async {
               await SQLHelper.delete('contacts', contact['id']);
@@ -66,23 +122,6 @@ class ContactDetailPage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildDetailItem(String title, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        Text(
-          value,
-          style: TextStyle(fontSize: 18),
-        ),
-        const Divider(),
-      ],
     );
   }
 }
