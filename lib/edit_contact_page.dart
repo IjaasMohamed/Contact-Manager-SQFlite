@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'sql_helper.dart';
+import 'sql_helper.dart'; 
 import 'package:sqlflite_crud/theme/theme.dart';
 
 class EditContactPage extends StatefulWidget {
@@ -99,101 +99,103 @@ class _EditContactPageState extends State<EditContactPage> {
       appBar: AppBar(
         title: const Text("Edit Contact"),
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.all(14),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: nameController,
-                textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Please enter a name";
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  hintText: "Name",
+        children: [
+          Form(
+                        key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: nameController,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter a name";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Name",
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: surnameController,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  hintText: "Surname",
+                const SizedBox(height: 20),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: surnameController,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Surname",
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: jobController,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  hintText: "Job",
+                const SizedBox(height: 20),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: jobController,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Job",
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                keyboardType: TextInputType.phone,
-                controller: phoneController,
-                textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Please enter a phone number";
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  hintText: "Phone",
+                const SizedBox(height: 20),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  keyboardType: TextInputType.phone,
+                  controller: phoneController,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter a phone number";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Phone",
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: emailController,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  hintText: "Email",
+                const SizedBox(height: 20),
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: emailController,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Email",
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                keyboardType: TextInputType.url,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: websiteController,
-                textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
-                  hintText: "Website",
+                const SizedBox(height: 20),
+                TextFormField(
+                  keyboardType: TextInputType.url,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: websiteController,
+                  textInputAction: TextInputAction.done,
+                  decoration: const InputDecoration(
+                    hintText: "Website",
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              CheckboxListTile(
-                title: const Text("Favorite"),
-                value: isFavorite,
-                onChanged: (newValue) {
-                  setState(() {
-                    isFavorite = newValue!;
-                  });
-                },
-              ),
-              const SizedBox(height: 40),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: editContact,
-                  child: const Text("Edit Contact"),
+                const SizedBox(height: 20),
+                CheckboxListTile(
+                  title: const Text("Favorite"),
+                  value: isFavorite,
+                  onChanged: (newValue) {
+                    setState(() {
+                      isFavorite = newValue!;
+                    });
+                  },
                 ),
-              )
-            ],
-          ),
-        ),
+                const SizedBox(height: 40),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: editContact,
+                    child: const Text("Edit Contact"),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
