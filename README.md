@@ -1,16 +1,25 @@
-# sqlflite_crud
 
-A new Flutter project.
 
-## Getting Started
+# Contact Manager App
+![made 1](https://github.com/IjaasMohamed/Contact-Manager-SQFlite/assets/96341377/230e59cf-de8d-4683-a4a9-19028d9f1fad)
 
+This Contact Manager app is built using Flutter and offers a simple yet efficient way to manage contacts. The app allows users to add, edit, and delete contacts, search for specific contacts by name, and view contact details. The app uses SQLite to store contact information, ensuring data persistence across sessions.
 This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+**Features**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Add new contacts with name, phone number, email, website, and job details.
+Edit existing contacts seamlessly.
+Delete unwanted contacts.
+Search for contacts by name.
+Mark contacts as favorites.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+-![made](https://github.com/IjaasMohamed/Contact-Manager-SQFlite/assets/96341377/988295cc-f28f-4689-99c8-cde4f4193980)
+
+
+Installation:
+Clone the repository.
+Ensure you have Flutter installed.
+Run flutter pub get to install dependencies.
+Run the app using flutter run.
+Feel free to contribute or report issues if any!
